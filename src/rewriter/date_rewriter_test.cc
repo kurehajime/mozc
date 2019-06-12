@@ -374,6 +374,14 @@ TEST_F(DateRewriterTest, ADToERA) {
                  "昭和六十四",
                  "平成元");
 
+  // AD.2019 is "平成31(年)" or "平成三一(年)" or "令和元(年)"
+  results.clear();
+  rewriter.AdToEra(2019, &results);
+  Expect3Results(results,
+                 "平成31",
+                 "平成三十一",
+                 "令和元");
+
   // AD.1990 is "平成2(年)" or "平成(二)年"
   results.clear();
   rewriter.AdToEra(1990, &results);
@@ -381,6 +389,14 @@ TEST_F(DateRewriterTest, ADToERA) {
   Expect2Results(results,
                  "平成2",
                  "平成二");
+
+  // AD.2019 is "令和2(年)" or "霊和(二)年"
+  results.clear();
+  rewriter.AdToEra(2020, &results);
+  EXPECT_EQ(results.size(), 2);
+  Expect2Results(results,
+                 "令和2",
+                 "令和二");
 
   // 2 courts era.
   // AD.1331 "元徳3(年)" or "元弘元(年)"
